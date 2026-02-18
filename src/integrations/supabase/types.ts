@@ -14,6 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
+      asset_transactions: {
+        Row: {
+          asset_id: string
+          created_at: string
+          due_date: string
+          id: string
+          issue_date: string
+          issued_by: string
+          issued_to: string
+          return_condition: string | null
+          return_date: string | null
+          signature_data: string | null
+          status: Database["public"]["Enums"]["asset_status"]
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          due_date: string
+          id?: string
+          issue_date?: string
+          issued_by: string
+          issued_to: string
+          return_condition?: string | null
+          return_date?: string | null
+          signature_data?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          due_date?: string
+          id?: string
+          issue_date?: string
+          issued_by?: string
+          issued_to?: string
+          return_condition?: string | null
+          return_date?: string | null
+          signature_data?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "asset_transactions_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assets: {
+        Row: {
+          asset_code: string
+          asset_type: string
+          created_at: string
+          created_by: string
+          department: string | null
+          id: string
+          image_url: string | null
+          name: string
+          serial_number: string | null
+          status: Database["public"]["Enums"]["asset_status"]
+          updated_at: string
+        }
+        Insert: {
+          asset_code: string
+          asset_type: string
+          created_at?: string
+          created_by: string
+          department?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          serial_number?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+          updated_at?: string
+        }
+        Update: {
+          asset_code?: string
+          asset_type?: string
+          created_at?: string
+          created_by?: string
+          department?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          serial_number?: string | null
+          status?: Database["public"]["Enums"]["asset_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       audit_log: {
         Row: {
           action: string
@@ -136,6 +228,302 @@ export type Database = {
         }
         Relationships: []
       }
+      complaint_assignments: {
+        Row: {
+          assigned_at: string
+          assigned_department: string
+          assigned_to: string | null
+          complaint_id: string
+          id: string
+        }
+        Insert: {
+          assigned_at?: string
+          assigned_department: string
+          assigned_to?: string | null
+          complaint_id: string
+          id?: string
+        }
+        Update: {
+          assigned_at?: string
+          assigned_department?: string
+          assigned_to?: string | null
+          complaint_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "complaint_assignments_complaint_id_fkey"
+            columns: ["complaint_id"]
+            isOneToOne: false
+            referencedRelation: "complaints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      complaint_history: {
+        Row: {
+          action: string
+          complaint_id: string
+          created_at: string
+          id: string
+          note: string | null
+          performed_by: string
+        }
+        Insert: {
+          action: string
+          complaint_id: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          performed_by: string
+        }
+        Update: {
+          action?: string
+          complaint_id?: string
+          created_at?: string
+          id?: string
+          note?: string | null
+          performed_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "complaint_history_complaint_id_fkey"
+            columns: ["complaint_id"]
+            isOneToOne: false
+            referencedRelation: "complaints"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      complaints: {
+        Row: {
+          attachment_url: string | null
+          category: Database["public"]["Enums"]["complaint_category"]
+          created_at: string
+          description: string
+          id: string
+          priority: Database["public"]["Enums"]["complaint_priority"]
+          resolution_remark: string | null
+          status: Database["public"]["Enums"]["complaint_status"]
+          submitted_by: string
+          updated_at: string
+        }
+        Insert: {
+          attachment_url?: string | null
+          category: Database["public"]["Enums"]["complaint_category"]
+          created_at?: string
+          description: string
+          id?: string
+          priority?: Database["public"]["Enums"]["complaint_priority"]
+          resolution_remark?: string | null
+          status?: Database["public"]["Enums"]["complaint_status"]
+          submitted_by: string
+          updated_at?: string
+        }
+        Update: {
+          attachment_url?: string | null
+          category?: Database["public"]["Enums"]["complaint_category"]
+          created_at?: string
+          description?: string
+          id?: string
+          priority?: Database["public"]["Enums"]["complaint_priority"]
+          resolution_remark?: string | null
+          status?: Database["public"]["Enums"]["complaint_status"]
+          submitted_by?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      courier_acknowledgements: {
+        Row: {
+          acknowledged_at: string
+          acknowledged_by: string
+          courier_id: string
+          id: string
+          signature_data: string
+        }
+        Insert: {
+          acknowledged_at?: string
+          acknowledged_by: string
+          courier_id: string
+          id?: string
+          signature_data: string
+        }
+        Update: {
+          acknowledged_at?: string
+          acknowledged_by?: string
+          courier_id?: string
+          id?: string
+          signature_data?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courier_acknowledgements_courier_id_fkey"
+            columns: ["courier_id"]
+            isOneToOne: false
+            referencedRelation: "couriers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courier_vendors: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      couriers: {
+        Row: {
+          assigned_to: string
+          created_at: string
+          created_by: string
+          id: string
+          slip_image_url: string | null
+          status: Database["public"]["Enums"]["courier_status"]
+          tracking_number: string
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          assigned_to: string
+          created_at?: string
+          created_by: string
+          id?: string
+          slip_image_url?: string | null
+          status?: Database["public"]["Enums"]["courier_status"]
+          tracking_number: string
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          assigned_to?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          slip_image_url?: string | null
+          status?: Database["public"]["Enums"]["courier_status"]
+          tracking_number?: string
+          updated_at?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "couriers_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "courier_vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      damage_reports: {
+        Row: {
+          asset_id: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          reported_by: string
+          transaction_id: string | null
+        }
+        Insert: {
+          asset_id: string
+          created_at?: string
+          description: string
+          id?: string
+          image_url?: string | null
+          reported_by: string
+          transaction_id?: string | null
+        }
+        Update: {
+          asset_id?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          reported_by?: string
+          transaction_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "damage_reports_asset_id_fkey"
+            columns: ["asset_id"]
+            isOneToOne: false
+            referencedRelation: "assets"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "damage_reports_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "asset_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      departments: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          message: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          message: string
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          message?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -227,7 +615,12 @@ export type Database = {
         | "admin"
         | "employee"
         | "it_team"
+      asset_status: "available" | "issued" | "returned" | "overdue" | "damaged"
       bill_status: "draft" | "pending" | "approved" | "rejected"
+      complaint_category: "it" | "maintenance" | "hr" | "security" | "admin"
+      complaint_priority: "low" | "medium" | "high"
+      complaint_status: "open" | "in_progress" | "closed"
+      courier_status: "pending_pickup" | "collected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -364,7 +757,12 @@ export const Constants = {
         "employee",
         "it_team",
       ],
+      asset_status: ["available", "issued", "returned", "overdue", "damaged"],
       bill_status: ["draft", "pending", "approved", "rejected"],
+      complaint_category: ["it", "maintenance", "hr", "security", "admin"],
+      complaint_priority: ["low", "medium", "high"],
+      complaint_status: ["open", "in_progress", "closed"],
+      courier_status: ["pending_pickup", "collected"],
     },
   },
 } as const
